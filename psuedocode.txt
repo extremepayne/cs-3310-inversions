@@ -1,0 +1,10 @@
+def sort_and_count(array):
+    if array's length is 0 or 1:
+        return array
+    else:
+        divide array into two halves
+        run sort and count on the first half
+        run sort and count on the second half
+        run merging subroutine
+
+def 
