@@ -6,5 +6,14 @@ def sort_and_count(array):
         run sort and count on the first half
         run sort and count on the second half
         run merging subroutine
+        add left, right, and split inversions
+        return result of merging subroutine (sorted array and inversion count)
 
-def 
+def merge_subroutine(left_array, right_array):
+    set pointers to initial positions for both arrays
+    while both pointers is pointing inside the array:
+        compare the integers at both pointer locations
+        add the smaller integer to our merged array
+        if the smaller integer was from the right_array:
+            add the difference between the length of the left_array and the current pointer position
+    return the sorted arrays and the count of split inversions
