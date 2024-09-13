@@ -21,6 +21,14 @@ fn main() {
     }
     let ex1_invs = mergesort(&mut ex1_vec);
     println!("Inversions in example 1: {ex1_invs}");
+    let ex2 = File::open("ex2.txt").unwrap();
+    let ex2_reader = io::BufReader::new(ex2).lines();
+    let mut ex2_vec: Vec<i32> = Vec::new();
+    for line in ex2_reader.flatten(){
+        ex2_vec.push(line.parse().unwrap());
+    }
+    let ex2_invs = mergesort(&mut ex2_vec);
+    println!("Inversions in example 1: {ex2_invs}");
 }
 
 fn mergesort(arr: &mut [i32]) -> usize {
