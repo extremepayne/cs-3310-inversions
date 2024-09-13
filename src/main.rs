@@ -2,6 +2,11 @@ fn main() {
     let mut already_sorted = [0, 1, 2, 3, 4, 5];
     let no_inversions = mergesort(&mut already_sorted);
     println!("Inversions in {:?}: {no_inversions}", already_sorted);
+    let mut inverse_sorted =  [8, 7, 6, 5, 4, 3, 2, 1];
+    let inverse_inversions = mergesort(&mut inverse_sorted);
+    println!("Inversions in {:?}: {inverse_inversions}", inverse_sorted);
+    let expected_inversions = (inverse_sorted.len() * (inverse_sorted.len() - 1)) / 2;
+    println!("(should be {expected_inversions})");
 }
 
 fn mergesort(arr: &mut [i32]) -> usize {
