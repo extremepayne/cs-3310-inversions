@@ -12,8 +12,15 @@ fn main() {
     println!("(should be {expected_inversions})");
     println!("reading first example file");
     // gonna be unsafe because I expect this file to exist
+    // and be correctly formatted
     let ex1 = File::open("ex1.txt").unwrap();
     let ex1_reader = io::BufReader::new(ex1).lines();
+    let mut ex1_vec: Vec<i32> = Vec::new();
+    for line in ex1_reader.flatten(){
+        ex1_vec.push(line.parse().unwrap());
+    }
+    let ex1_invs = mergesort(&mut ex1_vec);
+    println!("Inversions in example 1: {ex1_invs}");
 }
 
 fn mergesort(arr: &mut [i32]) -> usize {
