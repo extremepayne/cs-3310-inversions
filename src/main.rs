@@ -1,5 +1,8 @@
 fn main() {
     println!("Hello, world!");
+    let mut already_sorted = [0, 1, 2, 3, 4, 5];
+    let no_inversions = mergesort(&mut already_sorted);
+    println!("Inversions in {:?}: {no_inversions}", already_sorted);
 }
 
 fn mergesort(arr: &mut [i32]) -> usize {
