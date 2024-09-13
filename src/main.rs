@@ -4,7 +4,7 @@ fn main() {
 
 fn mergesort(arr: &mut [i32]) -> usize {
     if arr.len() < 2 {
-        return 0; // already sorted, no inversions
+        return 0; // already sorted; no inversions
     }
     // find midpoint
     let mid = arr.len() / 2;
@@ -12,7 +12,7 @@ fn mergesort(arr: &mut [i32]) -> usize {
     // create duplicate array to overwrite with the results of the sorted array
     let mut sorted = arr.to_vec();
 
-    // recursively sort both halves
+    // recursively sort both halves and get each half's inversions
     let left_inv = mergesort(&mut arr[..mid]);
     let right_inv = mergesort(&mut arr[mid..]);
 
