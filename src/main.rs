@@ -28,7 +28,7 @@ fn main() {
         ex2_vec.push(line.parse().unwrap());
     }
     let ex2_invs = mergesort(&mut ex2_vec);
-    println!("Inversions in example 1: {ex2_invs}");
+    println!("Inversions in example 2: {ex2_invs}");
 }
 
 fn mergesort(arr: &mut [i32]) -> usize {
