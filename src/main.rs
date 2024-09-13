@@ -1,3 +1,6 @@
+use std::fs::File;
+use std::io::{self, BufRead};
+
 fn main() {
     let mut already_sorted = [0, 1, 2, 3, 4, 5];
     let no_inversions = mergesort(&mut already_sorted);
@@ -7,6 +10,10 @@ fn main() {
     println!("Inversions in {:?}: {inverse_inversions}", inverse_sorted);
     let expected_inversions = (inverse_sorted.len() * (inverse_sorted.len() - 1)) / 2;
     println!("(should be {expected_inversions})");
+    println!("reading first example file");
+    // gonna be unsafe because I expect this file to exist
+    let ex1 = File::open("ex1.txt").unwrap();
+    let ex1_reader = io::BufReader::new(ex1).lines();
 }
 
 fn mergesort(arr: &mut [i32]) -> usize {
