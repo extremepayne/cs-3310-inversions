@@ -16,4 +16,5 @@ def merge_subroutine(left_array, right_array):
         add the smaller integer to our merged array
         if the smaller integer was from the right_array:
             add the difference between the length of the left_array and the current pointer position
+    finish out the array that remains. no inversions will be counted during this step.
     return the sorted arrays and the count of split inversions
