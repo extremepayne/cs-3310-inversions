@@ -1,7 +1,49 @@
 use std::fs::File;
 use std::io::{self, BufRead};
+use std::env;
 
 fn main() {
+    let args: Vec<String> = env::args().collect();
+    if args.len() == 1 {
+        println!("No arguments passed. Defaulting to sanity checks");
+        println!("Usage: s for sanity check, e [number] to read an example file");
+        println!("Append n to do naive method");
+        sanity_checks();
+    }
+    else if args[1] == "s" {
+        sanity_checks();
+    }
+    else if args[1] == "e" {
+        if args.len() < 3 {
+            panic!("Please provide an example number");
+        }
+        if args.len() >= 4 && args[3] == "n" {
+            read_ex(&args[2], true);
+        } else {
+            read_ex(&args[2], false);
+        }
+    }
+}
+
+fn read_ex(x: &str, naive: bool) {
+    // gonna be unsafe because I expect this file to exist
+    // and be correctly formatted
+    let filename = format!("ex{}.txt", x);
+    println!("reading example file number {x}: {filename}");
+    let ex = File::open(filename).unwrap();
+    let ex_reader = io::BufReader::new(ex).lines();
+    let mut ex_vec: Vec<i32> = Vec::new();
+    for line in ex_reader.flatten(){
+        ex_vec.push(line.parse().unwrap());
+    }
+    if naive { println!("doing a naive method"); }
+    let ex_invs = 
+        if naive {naive_count(&mut ex_vec)}
+        else {mergesort(&mut ex_vec)};
+    println!("Inversions in example {x}: {ex_invs}");
+}
+
+fn sanity_checks() {
     let mut already_sorted = [0, 1, 2, 3, 4, 5];
     let no_inversions = mergesort(&mut already_sorted);
     println!("Inversions in {:?}: {no_inversions}", already_sorted);
@@ -10,25 +52,10 @@ fn main() {
     println!("Inversions in {:?}: {inverse_inversions}", inverse_sorted);
     let expected_inversions = (inverse_sorted.len() * (inverse_sorted.len() - 1)) / 2;
     println!("(should be {expected_inversions})");
-    println!("reading first example file");
-    // gonna be unsafe because I expect this file to exist
-    // and be correctly formatted
-    let ex1 = File::open("ex1.txt").unwrap();
-    let ex1_reader = io::BufReader::new(ex1).lines();
-    let mut ex1_vec: Vec<i32> = Vec::new();
-    for line in ex1_reader.flatten(){
-        ex1_vec.push(line.parse().unwrap());
+    if no_inversions != 0 || inverse_inversions != expected_inversions {
+        panic!("sanity checks failed!")
     }
-    let ex1_invs = mergesort(&mut ex1_vec);
-    println!("Inversions in example 1: {ex1_invs}");
-    let ex2 = File::open("ex2.txt").unwrap();
-    let ex2_reader = io::BufReader::new(ex2).lines();
-    let mut ex2_vec: Vec<i32> = Vec::new();
-    for line in ex2_reader.flatten(){
-        ex2_vec.push(line.parse().unwrap());
-    }
-    let ex2_invs = mergesort(&mut ex2_vec);
-    println!("Inversions in example 2: {ex2_invs}");
+    println!("sanity checks passed")
 }
 
 fn mergesort(arr: &mut [i32]) -> usize {
