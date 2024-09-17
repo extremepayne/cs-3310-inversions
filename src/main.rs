@@ -1,6 +1,7 @@
 use std::fs::File;
 use std::io::{self, BufRead};
 use std::env;
+use std::time::Instant;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -37,10 +38,13 @@ fn read_ex(x: &str, naive: bool) {
         ex_vec.push(line.parse().unwrap());
     }
     if naive { println!("doing a naive method"); }
+    let now = Instant::now();
     let ex_invs = 
         if naive {naive_count(&mut ex_vec)}
         else {mergesort(&mut ex_vec)};
+    let elapsed_time = now.elapsed();
     println!("Inversions in example {x}: {ex_invs}");
+    println!("Counting those inversions took {:.2?}", elapsed_time);
 }
 
 fn sanity_checks() {
