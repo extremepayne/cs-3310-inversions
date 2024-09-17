@@ -100,3 +100,14 @@ fn merge(left_arr: &[i32], right_arr: &[i32], sorted: &mut [i32]) -> usize {
     inversions
 }
 
+fn naive_count(arr: &[i32]) -> usize {
+    let mut inversions = 0;
+    for (i, x) in arr.iter().enumerate() {
+        for y in arr[i..].iter() {
+            if x > y {
+                inversions += 1;
+            }
+        }
+    }
+    inversions
+}
