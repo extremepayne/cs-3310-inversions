@@ -4,6 +4,8 @@ Program that counts the inversions (pairs of out-of-order elements) of an array 
 
 Includes both O(n²) naive version using nested for loops and O(n\*log(n)) version using mergesort.
 
+This assignment helped me get comfortable actually using Rust slices to pass array subsegments back and forth through the recursion.
+
 ## Example usage:
 
 `cargo run --release` or `cargo run --release -- s`
