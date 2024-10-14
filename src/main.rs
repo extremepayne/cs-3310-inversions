@@ -1,6 +1,6 @@
+use std::env;
 use std::fs::File;
 use std::io::{self, BufRead};
-use std::env;
 use std::time::Instant;
 
 fn main() {
@@ -10,11 +10,9 @@ fn main() {
         println!("Usage: s for sanity check, e [number] to read an example file");
         println!("Append n to do naive method");
         sanity_checks();
-    }
-    else if args[1] == "s" {
+    } else if args[1] == "s" {
         sanity_checks();
-    }
-    else if args[1] == "e" {
+    } else if args[1] == "e" {
         if args.len() < 3 {
             panic!("Please provide an example number");
         }
@@ -34,14 +32,18 @@ fn read_ex(x: &str, naive: bool) {
     let ex = File::open(filename).unwrap();
     let ex_reader = io::BufReader::new(ex).lines();
     let mut ex_vec: Vec<i32> = Vec::new();
-    for line in ex_reader.flatten(){
+    for line in ex_reader.flatten() {
         ex_vec.push(line.parse().unwrap());
     }
-    if naive { println!("doing a naive method"); }
+    if naive {
+        println!("doing a naive method");
+    }
     let now = Instant::now();
-    let ex_invs = 
-        if naive {naive_count(&mut ex_vec)}
-        else {mergesort(&mut ex_vec)};
+    let ex_invs = if naive {
+        naive_count(&mut ex_vec)
+    } else {
+        mergesort(&mut ex_vec)
+    };
     let elapsed_time = now.elapsed();
     println!("Inversions in example {x}: {ex_invs}");
     println!("Counting those inversions took {:.2?}", elapsed_time);
@@ -51,7 +53,7 @@ fn sanity_checks() {
     let mut already_sorted = [0, 1, 2, 3, 4, 5];
     let no_inversions = mergesort(&mut already_sorted);
     println!("Inversions in {:?}: {no_inversions}", already_sorted);
-    let mut inverse_sorted =  [8, 7, 6, 5, 4, 3, 2, 1];
+    let mut inverse_sorted = [8, 7, 6, 5, 4, 3, 2, 1];
     let inverse_inversions = mergesort(&mut inverse_sorted);
     println!("Inversions in {:?}: {inverse_inversions}", inverse_sorted);
     let expected_inversions = (inverse_sorted.len() * (inverse_sorted.len() - 1)) / 2;
@@ -82,7 +84,7 @@ fn mergesort(arr: &mut [i32]) -> usize {
     // copy duplicate array back into original array
     // which calling scope will have access to
     arr.copy_from_slice(&sorted);
-    
+
     // total up inversions and return
     left_inv + right_inv + split_inv
 }
@@ -92,7 +94,7 @@ fn merge(left_arr: &[i32], right_arr: &[i32], sorted: &mut [i32]) -> usize {
     // and a count for inversions
     let (mut l_ptr, mut r_ptr, mut s_ptr, mut inversions) = (0, 0, 0, 0);
     // loop until one or the other array is exhausted
-    while l_ptr < left_arr.len() && r_ptr < right_arr.len(){
+    while l_ptr < left_arr.len() && r_ptr < right_arr.len() {
         // if right array's member is greater than left array's member,
         // put right array's member in the final array and
         // increment the number of inversions by the number of remaining members
@@ -122,7 +124,8 @@ fn merge(left_arr: &[i32], right_arr: &[i32], sorted: &mut [i32]) -> usize {
         sorted[s_ptr] = left_arr[l_ptr];
         l_ptr += 1;
         s_ptr += 1;
-    } while r_ptr < right_arr.len() {
+    }
+    while r_ptr < right_arr.len() {
         sorted[s_ptr] = right_arr[r_ptr];
         r_ptr += 1;
         s_ptr += 1;
